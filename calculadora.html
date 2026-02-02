@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculadora de Médias</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">Média das Notas dos Alunos</h1>
+
+        <div class="calculadora">
+            <div class="menu">
+                <p>Nota:</p>
+                <input type="number" id="nota" placeholder="Ex: 8.5">
+                <button id="enviar">Adicionar</button>
+            </div>
+
+            <div id="lista-exibicao" class="quadrado-central"></div>
+
+            <button id="calcular" class="btn-acao">Calcular Média</button>
+            <button id="limpar" class="btn-acao">Limpar</button>
+
+            <p class="resultado">A média é: <span id="valor-media"></span></p>
+        </div>
+    </div>
+
+   <script>
+let contador = 0;
+let notas = [];
+function enviar() {
+    let input = document.querySelector("#nota");
+    let quadrado = document.querySelector("#lista-exibicao");
+    let bruto = (input.value);
+    let valor = Number(bruto.replace(",", "."));
+    if (bruto.trim() === "") { 
+        alert("Por favor, insira uma nota.");
+    } 
+    else if (valor>=0 && valor<=10){
+        contador++;
+        notas.push(valor);
+        quadrado.innerText += `Nota ${contador}: ${valor}\n`;
+        input.value = "";
+        input.focus();
+        console.log(`A nota ${contador} é ${valor}`);
+    }
+    else {
+        alert("A nota digitada é inválida. Por favor, insira uma nota válida.");
+        input.value = "";
+}
+}
+
+function calcularMedia() {
+    let soma = 0; 
+    for (let i = 0; i < notas.length; i++) {
+        soma += notas[i];
+    }
+
+    if (notas.length > 0) {
+        let mediattl = (soma / notas.length);
+        let texto = document.querySelector("#valor-media");
+        texto.innerText = mediattl.toFixed(2); 
+    } else {
+        alert("Adicione notas primeiro!");
+    }
+}
+
+function limparTd() {
+    notas = [];
+    contador = 0;
+    document.querySelector("#lista-exibicao").innerText = "";
+    document.querySelector("#valor-media").innerText = "";
+}
+let btn_enviar=document.querySelector("#enviar");
+btn_enviar.addEventListener("click", enviar);
+
+let btn_calcular=document.querySelector("#calcular");
+btn_calcular.addEventListener("click", calcularMedia);
+
+let btn_limpar=document.querySelector("#limpar");
+btn_limpar.addEventListener("click", limparTd);
+</script>
